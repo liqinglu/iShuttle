@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+   	
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical" >
+		
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="#99000000"
+	        android:orientation="horizontal" >
+	  		<AutoCompleteTextView
+	  		    android:layout_weight="5"
+	            android:id="@+id/et_search"
+	            android:layout_width="0dip"
+	            android:layout_height="36dip"
+	            android:textSize="14sp"
+	            android:hint="目的地搜索"
+	            />
+	        <Button android:id="@+id/btn_search" 
+	            android:layout_weight="1"
+			    android:layout_width="0dip" 
+			    android:layout_height="32dip"
+			    android:text="搜索"
+			    android:textSize="16sp"
+			    android:background="@drawable/buttonstyle"/>
+	      
+	    </LinearLayout>
+	
+	    <com.baidu.mapapi.map.MapView
+	        android:id="@+id/bmapView"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="2.07"
+	        android:clickable="true" />
+	
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+	
+	        <FrameLayout
+	            android:id="@android:id/tabcontent"
+	            android:layout_width="fill_parent"
+	            android:layout_height="0.0dip"
+	            android:layout_weight="1.0" />
+	
+	        <TabWidget
+	            android:id="@android:id/tabs"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.0"
+	            android:visibility="gone" />
+	
+	        <RadioGroup
+	            android:id="@id/main_radio"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="bottom"
+	            android:background="@drawable/maintab_toolbar_bg"
+	            android:gravity="center_vertical"
+	            android:orientation="horizontal" >
+	
+	            <RadioButton
+	                android:id="@+id/radio_btn_line"
+	                style="@style/main_tab_bottom"
+	                android:layout_marginTop="2.0dip"
+	                android:drawableTop="@drawable/ico_1"
+	                android:text="@string/main_line" />
+	
+	            <RadioButton
+	                android:id="@+id/radio_btn_srnd"
+	                style="@style/main_tab_bottom"
+	                android:layout_marginTop="2.0dip"
+	                android:drawableTop="@drawable/ico_2"
+	                android:text="@string/main_srnd" />
+	
+	            <RadioButton
+	                android:id="@+id/radio_btn_track"
+	                style="@style/main_tab_bottom"
+	                android:layout_marginTop="2.0dip"
+	                android:drawableTop="@drawable/ico_3"
+	                android:text="@string/main_track" />
+	
+	            <RadioButton
+	                android:id="@+id/radio_btn_post"
+	                style="@style/main_tab_bottom"
+	                android:layout_marginTop="2.0dip"
+	                android:drawableTop="@drawable/ico_4"
+	                android:text="@string/main_post" />
+	
+	            <RadioButton
+	                android:id="@+id/radio_btn_more"
+	                style="@style/main_tab_bottom"
+	                android:layout_marginTop="2.0dip"
+	                android:drawableTop="@drawable/ico_5"
+	                android:text="@string/main_more" />
+	        </RadioGroup>
+	    </LinearLayout>
+	</LinearLayout>
+	
+	<nandgate.ishuttle.pathbutton.composerLayout
+	    android:id="@+id/surfButton"
+	    android:layout_width="20dp"
+	   	android:layout_height="wrap_content" 
+	    android:layout_alignParentRight="true"
+	    android:layout_centerVertical="true" />
+
+    <LinearLayout android:id="@+id/splashscreen"
+		android:orientation="vertical" 
+        android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+    <ImageView 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        android:src="@+drawable/welcome"/>
+	</LinearLayout>
+	
+</RelativeLayout>

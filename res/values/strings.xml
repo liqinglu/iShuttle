@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">iShuttle</string>
+    <string name="menu_settings">Settings</string>
+    <string name="splash">splash</string>
+    
+    <string name="main_line">线路</string>
+    <string name="main_srnd">快查</string>
+    <string name="main_track">追踪</string>
+    <string name="main_post">社交</string>
+    <string name="main_more">更多</string>
+    
+    <string-array name="list_pref_01">
+        <item >6 点 05 分钟</item>
+        <item >6 点 15 分钟</item>
+        <item >6 点 25 分钟</item>
+        <item >6 点 35 分钟</item>
+        <item >6 点 45 分钟</item>
+        <item >6 点 55 分钟</item>
+        <item >7 点 05 分钟</item>
+        <item >7 点 15 分钟</item>
+        <item >7 点 25 分钟</item>
+        <item >7 点 35 分钟</item>
+        <item >7 点 45 分钟</item>
+        <item >7 点 55 分钟</item>
+    </string-array>
+    
+    <string-array name="list_pref_01_value">
+        <item >21900000</item>
+        <item >22500000</item>
+        <item >23100000</item>
+        <item >23700000</item>
+        <item >24300000</item>
+        <item >24900000</item>
+        <item >25500000</item>
+        <item >26100000</item>
+        <item >26700000</item>
+        <item >27300000</item>
+        <item >27900000</item>
+        <item >28500000</item>
+    </string-array>
+    
+    <string-array name="list_pref_02">
+        <item >400 米</item>
+        <item >600 米</item>
+        <item >800 米</item>
+        <item >1200 米</item>
+        <item >1600 米</item>
+        <item >2000 米</item>
+        <item >3000 米</item>
+    </string-array>
+    
+    <string-array name="list_pref_02_value">
+        <item >400</item>
+        <item >600</item>
+        <item >800</item>
+        <item >1200</item>
+        <item >1600</item>
+        <item >2000</item>
+        <item >3000</item>
+    </string-array>
+    
+</resources>

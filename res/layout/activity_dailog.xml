@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+  	android:layout_height="fill_parent"
+  	android:gravity="center_vertical|center_horizontal">
+  	
+  	<LinearLayout
+	  android:id="@+id/layout"
+	  android:layout_width="fill_parent"
+	  android:layout_height="fill_parent"
+	  android:orientation="vertical"
+	  android:background="#88000000">
+	  
+	  <TextView
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="wrap_content"
+	  	android:padding="10px"
+	  	android:gravity="center_horizontal"
+	  	android:text="关于"
+	  	android:textSize="25dip"
+	  />
+	  
+	  <LinearLayout
+		  android:id="@+id/layout_more"
+		  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content"
+		  android:orientation="vertical"
+		  android:gravity="center"
+		  android:background="@drawable/dialog_bg">
+	  
+	      
+	      <TextView
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="wrap_content"
+	  	android:padding="10px"
+	  		android:textSize="20dip"
+	  	android:gravity="center_horizontal"
+	  	android:text="朗讯爱班车"
+	  />
+	       <TextView
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="wrap_content"
+	  	android:padding="10px"
+	  		android:textSize="20dip"
+	  	android:gravity="center_horizontal"
+	  	android:text="仅供公司内部使用！"
+	  />
+	       <TextView
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="wrap_content"
+	  	android:padding="10px"
+	  		android:textSize="20dip"
+	  	android:gravity="center_horizontal"
+	  	android:text="版本：V0.1 Beta"
+	  />
+	       <TextView
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="wrap_content"
+	  	android:padding="10px"
+	  		android:textSize="20dip"
+	  	android:gravity="center_horizontal"
+	  	android:text="问题请反馈至："
+	  />
+
+	       <TextView
+	           android:layout_width="fill_parent"
+	           android:layout_height="wrap_content"
+	           android:gravity="center_horizontal"
+	           android:padding="10px"
+	           android:textSize="16dip"
+	           android:text="Jinliang.Liu@alcatel-sbell.com.cn" />
+
+	       <TextView
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="wrap_content"
+	  	android:padding="10px"
+	  		android:textSize="15dip"
+	  	android:gravity="center_horizontal"
+	  	android:text="                  --TCE4G Team"
+	  />
+	      
+	  </LinearLayout>
+	</LinearLayout>
+</LinearLayout>

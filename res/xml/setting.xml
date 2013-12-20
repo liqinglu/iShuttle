@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:layout="@layout/pref_category"
+        android:title="提醒设置" >
+        
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="set_01"
+            android:layout="@layout/pref_list_item_top"
+            android:summaryOff="当前状态：关闭"
+            android:summaryOn="当前状态：开启"
+            android:title="开启工作日出发提醒"
+            android:widgetLayout="@layout/pref_widget_checkbox" />
+        
+        <ListPreference
+            android:key="set_02"
+            android:layout="@layout/pref_list_item_mid"
+            android:summary="点击修改"
+            android:title="提前若干分钟叫我起床"
+            android:widgetLayout="@layout/pref_widget_more"
+            android:entries="@array/list_pref_01"
+            android:entryValues="@array/list_pref_01_value"/>
+        
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="set_03"
+            android:layout="@layout/pref_list_item_mid"
+            android:summaryOff="当前状态：关闭"
+            android:summaryOn="当前状态：开启"
+            android:title="开启工作日到达提醒"
+            android:widgetLayout="@layout/pref_widget_checkbox" />
+        
+        <ListPreference
+            android:key="set_04"
+            android:layout="@layout/pref_list_item_bot"
+            android:summary="点击修改"
+            android:title="到站提前报警距离"
+            android:widgetLayout="@layout/pref_widget_more"
+            android:entries="@array/list_pref_02"
+            android:entryValues="@array/list_pref_02_value"/>
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:layout="@layout/pref_category"
+        android:title="通用配置" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="set_11"
+            android:layout="@layout/pref_list_item_top"
+            android:summaryOff="当前状态：关闭"
+            android:summaryOn="当前状态：开启"
+            android:title="开启班车位置上报"
+            android:widgetLayout="@layout/pref_widget_checkbox" />
+
+        <Preference
+            android:key="set_12"
+            android:layout="@layout/pref_list_item_mid"
+            android:summary="吐槽专用"
+            android:title="绑定微博账号"
+            android:widgetLayout="@layout/pref_widget_more" >
+            <intent android:action="nandgate.ishuttle.confirm"/>
+        </Preference>
+            
+        <RingtonePreference
+            android:key="set_13"
+            android:layout="@layout/pref_list_item_mid"
+            android:summary="点击修改"
+            android:title="设置声音"
+            android:widgetLayout="@layout/pref_widget_more" />
+        
+        <Preference
+            android:key="set_14"
+            android:layout="@layout/pref_list_item_bot"
+            android:summary="版本及作者"
+            android:title="关于"
+            android:widgetLayout="@layout/pref_widget_more">
+        	<intent android:action="nandgate.ishuttle.about"/>
+        </Preference>
+        
+    </PreferenceCategory>
+
+</PreferenceScreen>

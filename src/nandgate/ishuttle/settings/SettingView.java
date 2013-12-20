@@ -36,15 +36,15 @@ public class SettingView extends PreferenceActivity implements OnSharedPreferenc
 	private static AlarmManager am_Dist=null;
 	private static SettingView myInstance;
 	private static SharedPreferences sp;
-	private static Boolean isDetected;
-	private static Boolean isReported;
+	private static Boolean isDetected=false;
+	private static Boolean isReported=false;
 	public static List<String> station;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		myInstance=this;
-		if(savedInstanceState.getBoolean("set_station")){
+		if(getIntent().getBooleanExtra("set_station", false)){
 			station=DetailView.station;
 		}
 		getFragmentManager().beginTransaction().replace(android.R.id.content, new PrefsFragement()).commit(); 
@@ -74,12 +74,8 @@ public class SettingView extends PreferenceActivity implements OnSharedPreferenc
 					if(isDetected)
 						updateDistAlarm(currentLoc);
 					if(isReported)
-						updateMTracker(currentLoc);
+						updateLocRep(currentLoc);
 						
-				}
-	
-				private void updateMTracker(GeoPoint currentLoc) {
-					mMasterTracker.gp=currentLoc;
 				}
 
 				@Override
@@ -108,7 +104,7 @@ public class SettingView extends PreferenceActivity implements OnSharedPreferenc
 	
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sp, String set) {
-		System.out.println();
+
 		if(set.contains("set_01") || set.contains("set_02") || set.contains("set_13")){
 			updateTimeAlarm();
 		}
@@ -116,7 +112,7 @@ public class SettingView extends PreferenceActivity implements OnSharedPreferenc
 			detectTime();
 		}
 		if(set.contains("set_11")){
-			initLocationRep();
+			reportTime();
 		}
 	}  
 	
@@ -152,13 +148,20 @@ public class SettingView extends PreferenceActivity implements OnSharedPreferenc
 		if(alarm_distance==0)
 			return;
 		
+		Boolean alarm_en=Boolean.valueOf(sp.getBoolean("set_03", false));
+			
 		Float mLng=Float.valueOf(DetailView.station.get(CSVReader.CELL_LNG));
 		Float mLat=Float.valueOf(DetailView.station.get(CSVReader.CELL_LAT));
 		
 		GeoPoint mPoint=new GeoPoint((int) (mLat*1E6), (int) (mLng*1E6));
 		double distance=DistanceUtil.getDistance(mPoint, gp);
-
-		if(distance<alarm_distance){
+		
+		if(!alarm_en && am_Dist!=null){
+			Intent intent = new Intent("nandgate.ishuttle.timeup");
+			PendingIntent sender = PendingIntent.getBroadcast(
+	        		myInstance, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+			am_Dist.cancel(sender);
+		}else if(distance<alarm_distance){
 			am_Dist = (AlarmManager)myInstance.getSystemService(Context.ALARM_SERVICE);
 			Intent intent = new Intent("nandgate.ishuttle.arrive");
 			PendingIntent sender = PendingIntent.getBroadcast(
@@ -167,17 +170,12 @@ public class SettingView extends PreferenceActivity implements OnSharedPreferenc
 		}
 	}
 	
-	void initLocationRep(){
+	void updateLocRep(GeoPoint gp){
 		boolean check_rep = sp.getBoolean("set_11", false); 
-		if(check_rep){
-			isReported=true;
-			mLocationClient.start();
-			mMasterTracker=new MasterTracker();
-		}else if(mMasterTracker!=null){
-			isReported=false;
-			mLocationClient.stop();
-			mMasterTracker.cancel();
-		}
+		if(!check_rep)
+			return;
+		
+		mMasterTracker.gp=gp;
 	}
 
 	public static void resetDistAlarm() {
@@ -190,16 +188,29 @@ public class SettingView extends PreferenceActivity implements OnSharedPreferenc
 		isDetected=true;
 		mLocationClient.start();
 	}
-		
-	private static void detectTime(){
+	
+	public static void resetRepAlarm(){
+		isReported=false;
+		mMasterTracker.cancel();
+		mLocationClient.stop();
+		reportTime();
+	}
+
+	public static void setRepAlarm(){
+		isReported=true;
+		mMasterTracker=new MasterTracker();
+		mLocationClient.start();
+	}
+	
+private static void detectTime(){
 		
 		long day=(System.currentTimeMillis()+28800000)/86400000;
 		long time_begin=(System.currentTimeMillis()+28800000)-day*86400000;
 	
-		if(time_begin<32400000)
-			time_begin=day*86400000+2400000;
+		if(time_begin<61200000)
+			time_begin=day*86400000+32400000;
 		else
-			time_begin=(day+1)*86400000+2400000;
+			time_begin=(day+1)*86400000+32400000;
 		
 		long time_end=time_begin+10800000;
 		
@@ -215,6 +226,36 @@ public class SettingView extends PreferenceActivity implements OnSharedPreferenc
 			public void run() {
 				if(isDetected)
 					resetDistAlarm();
+			}
+		};
+		Timer end=new Timer();
+		end.schedule(shutdown, new Date(time_end));
+	}
+	
+	private static void reportTime(){
+		
+		long day=(System.currentTimeMillis()+28800000)/86400000;
+		long time_begin=(System.currentTimeMillis()+28800000)-day*86400000;
+	
+		if(time_begin<21600000)
+			time_begin=day*86400000-7200000;
+		else
+			time_begin=(day+1)*86400000-7200000;
+		
+		long time_end=time_begin+10800000;
+		
+		TimerTask reporter=new TimerTask(){
+			public void run() {
+				setRepAlarm();
+			}
+		};
+		Timer start=new Timer();
+		start.schedule(reporter, new Date(time_begin));
+	
+		TimerTask shutdown=new TimerTask(){
+			public void run() {
+				if(isReported)
+					resetRepAlarm();
 			}
 		};
 		Timer end=new Timer();

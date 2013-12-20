@@ -81,7 +81,7 @@ public class DetailView extends Activity{
 				Intent mIntent=new Intent(myInstance, SettingView.class);
 				mIntent.putExtra("set_station", true);
 				myInstance.startActivity(mIntent);
-				finish();
+				//finish();
 			}
 			
 		});

@@ -3,8 +3,7 @@ package nandgate.ishuttle.tracker;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import nandgate.ishuttle.selector.CSVReader;
-import nandgate.ishuttle.settings.SettingView;
+import nandgate.ishuttle.settings.SystemConfig;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -30,10 +29,12 @@ public class MasterTracker extends TimerTask{
 	
 
 	String getLine(){
-		return SettingView.station.get(CSVReader.CELL_LINE);
+		return SystemConfig.getInstance().getLinePref();
 	}
 	
 	void reportLoc(){
+		if(gp==null)
+			return;
 		String url=locUrl+"?"+"action=set&"+"line="+getLine()+"&lng="+gp.getLongitudeE6()+"&lat="+gp.getLatitudeE6();
 		HttpGet request=new HttpGet(url);
 		try {
@@ -42,6 +43,7 @@ public class MasterTracker extends TimerTask{
 				String result = EntityUtils.toString(response.getEntity());
 				if(result.contains("NOK"))
 					new DefaultHttpClient().execute(request);
+				System.out.println("update with result: "+result);
 			}
 			
 		} catch (Exception e) {

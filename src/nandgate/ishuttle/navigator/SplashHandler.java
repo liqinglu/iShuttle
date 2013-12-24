@@ -16,7 +16,7 @@ public class SplashHandler extends Handler{
 	private LocationClient mLocationClient;
 	private LinearLayout splash;
 
-	SplashHandler(LocationClient mLocationClient, LinearLayout splash){
+	public SplashHandler(LocationClient mLocationClient, LinearLayout splash){
 		this.mLocationClient=mLocationClient;
 		this.splash=splash;
 	}

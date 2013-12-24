@@ -22,7 +22,7 @@ import nandgate.ishuttle.mapper.PopLayer;
 import nandgate.ishuttle.marker.PoiCollector;
 import nandgate.ishuttle.selector.*;
 import nandgate.ishuttle.settings.SettingView;
-import nandgate.ishuttle.tracker.MasterTracker;
+import nandgate.ishuttle.settings.SystemConfig;
 import nandgate.ishuttle.tracker.SlaveTracker;
 import nandgate.ishuttle.weibo.weiboPoster;
 
@@ -34,10 +34,8 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -91,6 +89,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		mLocationClient = new LocationClient(getApplicationContext());
 		new SplashHandler(mLocationClient, splash).sendMessageDelayed(new Message(), 1000);
 	    getSource();
+	    SystemConfig.getInstance().initSysPref();
 	    
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mLayerManager=new LayerManager(mMapView);
@@ -125,7 +124,6 @@ public class MainActivity extends Activity implements OnClickListener{
 	 
 		@Override
 		public void onClick(View v) {
-			System.out.println(v.getId());
 			switch (v.getId()) {
 			case R.id.radio_btn_line:
 				mLocationClient.stop();
@@ -168,15 +166,17 @@ public class MainActivity extends Activity implements OnClickListener{
 					startActivity(intent);
 				 break;
 				 
-			 case R.id.radio_btn_track: 
+			 case R.id.radio_btn_track:
 				 mLocationClient.stop();
-				 new SlaveTracker();
+				 SlaveTracker.getTracker(mInstance).syncLoc(this);
 				 break;
+				 
 			 case R.id.radio_btn_post: 
+				mLocationClient.stop();
 				Intent intent1 = new Intent();
 				intent1.setClass(MainActivity.this, weiboPoster.class);
 				startActivity(intent1);
-				 break;
+				break;
 				 
 			 case R.id.ensurence:
 				 MainActivity.mLayerManager.initial();
@@ -196,14 +196,23 @@ public class MainActivity extends Activity implements OnClickListener{
 						mMyLocationListener.setCompass();
 					else
 						mMyLocationListener.setFresh();
+			 
 				 	isCompass=!isCompass;
 					mLocationClient.start();
 					mLocationClient.requestLocation();
 				break;
 
 			 case (BIAS+BUTTON3):
-				 AlertDialog mad3=new AlertDialog.Builder(MainActivity.this).setTitle("set voice").create();
-			 	mad3.show();
+				 if(!Boolean.valueOf(SystemConfig.getInstance().getDtcPref())){
+					 new AlertDialog.Builder(MainActivity.this).setTitle("没有启动距离报警哟").show();
+					 return;
+				 }else if(Integer.valueOf(SystemConfig.getInstance().getDistPref())<400){
+					 new AlertDialog.Builder(MainActivity.this).setTitle("还要设置报警距离哟").show();
+					 return;
+				 }else{
+				 SystemConfig.getInstance().nextDay();
+				 new AlertDialog.Builder(MainActivity.this).setTitle("本次到达提醒已经取消").show();
+				 }
 				 break;
 
 			 case (BIAS+BUTTON4):
@@ -295,7 +304,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		//slave tracker更新位置
 		public static void postOnMap(GeoPoint gp) {
 			mLayerManager.initial();
-			mLayerManager.applyBaseLayer(gp);
+			mLayerManager.applyBusLayer(gp);
 			mMapView.refresh();
 			mMapView.getController().animateTo(gp);
 		}

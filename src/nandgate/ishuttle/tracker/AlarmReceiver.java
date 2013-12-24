@@ -1,10 +1,6 @@
 package nandgate.ishuttle.tracker;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-
-import nandgate.ishuttle.settings.SettingView;
-
+import nandgate.ishuttle.settings.SystemConfig;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +11,7 @@ import android.os.SystemClock;
 		  @Override
 		  public void onReceive(Context context, Intent intent)
 		  {
-		    if(SettingView.checkTimeArrange()){
+		    if(SystemConfig.checkTimeArrange()){
 		    	showAlarm(context);
 		    }
 		    new Thread(){
@@ -23,7 +19,7 @@ import android.os.SystemClock;
 				@Override
 				public void run() {
 					SystemClock.sleep(1000);
-					SettingView.updateTimeAlarm();
+					SystemConfig.getInstance().updateTimeAlarm();
 					super.run();
 				}
 		    	

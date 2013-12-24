@@ -89,16 +89,16 @@ public class LayerManager {
 	public void applyLocLayer(LocationData locationData, Boolean cpMod){
 		mLoc=new LocLayer(MainActivity.mMapView);
 		if(cpMod)
-			mLoc.setMode(LocationMode.COMPASS);
+			mLoc.setLocationMode(LocationMode.COMPASS);
 		else
-			mLoc.setMode(LocationMode.FOLLOWING);
+			mLoc.setLocationMode(LocationMode.FOLLOWING);
 		mLoc.showlayer(locationData);
 		mMapView.getOverlays().add(mLoc);
 	}
 	
 	public void applyBaseLayer(){
 		mBase=new BaseLayer(mActivity.getResources().getDrawable(R.drawable.red), mMapView);
-	   	mBase.showLayer(mCollector.pois);
+	   	mBase.showLayer(mCollector.pois, MainActivity.marker);
 	   	mMapView.getOverlays().add(mBase);
 	}
 	
@@ -109,18 +109,18 @@ public class LayerManager {
 	public void applyBaseLayer(ArrayList<MKPoiInfo> mMKPois, Boolean flag){
 		this.mMKPois=mMKPois;
 		mBase=new BaseLayer(mActivity.getResources().getDrawable(R.drawable.red), mMapView);
-	   	mBase.showLayer(mMKPois);
+	   	mBase.showLayer(mMKPois, MainActivity.marker);
 	   	mBase.setFlag(flag);
 	   	mMapView.getOverlays().add(mBase);
 	}
 	
-	public void applyBaseLayer(GeoPoint gp){
+	public void applyBusLayer(GeoPoint gp){
 		mBase=new BaseLayer(mActivity.getResources().getDrawable(R.drawable.bus), mMapView);
 		ArrayList<MKPoiInfo> oneList=new ArrayList<MKPoiInfo>();
 		MKPoiInfo mMKPoint=new MKPoiInfo();
 		mMKPoint.pt=gp;
 		oneList.add(mMKPoint);
-		mBase.showLayer(oneList);
+		mBase.showLayer(oneList, mActivity.getResources().getDrawable(R.drawable.bus));
 		mBase.setFlag(false);
 	   	mMapView.getOverlays().add(mBase);
 	}

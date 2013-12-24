@@ -8,6 +8,8 @@ import nandgate.ishuttle.mapper.LayerManager;
 import nandgate.ishuttle.navigator.MainActivity;
 import nandgate.ishuttle.selector.CSVReader;
 import nandgate.ishuttle.settings.SettingView;
+import nandgate.ishuttle.settings.SystemConfig;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -21,8 +23,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class DetailView extends Activity{
-	public static List<String> station;
-	DetailView myInstance;
+	static List<String> station;
+	static DetailView myInstance;
+	@SuppressLint("UseValueOf")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,17 +33,17 @@ public class DetailView extends Activity{
 		myInstance=this;
 		LayerManager mLayerManager=MainActivity.mLayerManager;
 		
-		if(mLayerManager.searchType==mLayerManager.STA_SEARCH){
-			this.station=mLayerManager.mCollector.station;
-		}else if(mLayerManager.searchType==mLayerManager.LIN_SEARCH){
+		if(mLayerManager.searchType==LayerManager.STA_SEARCH){
+			DetailView.station=mLayerManager.mCollector.station;
+		}else if(mLayerManager.searchType==LayerManager.LIN_SEARCH){
 			if(mLayerManager.selection<mLayerManager.mCollector.line.size())
-				this.station=mLayerManager.mCollector.line.get((mLayerManager.selection+1)*5);
+				DetailView.station=mLayerManager.mCollector.line.get((mLayerManager.selection+1)*5);
 			else
-				this.station=mLayerManager.mCollector.station;
+				DetailView.station=mLayerManager.mCollector.station;
 		}else{
 			String line=mLayerManager.mMKPois.get(mLayerManager.selection).address;
 			String idx=mLayerManager.mMKPois.get(mLayerManager.selection).name;
-			this.station=MainActivity.busInfo.get(line).get(new Integer(idx));
+			DetailView.station=MainActivity.busInfo.get(line).get(new Integer(idx));
 		}
 		
 		TextView title=(TextView)findViewById(R.id.tvitem1);
@@ -78,13 +81,15 @@ public class DetailView extends Activity{
 
 			@Override
 			public void onClick(View arg0) {
+				SystemConfig.getInstance().setLinePref(station.get(CSVReader.CELL_LINE), station.get(CSVReader.CELL_LNG), station.get(CSVReader.CELL_LAT));
 				Intent mIntent=new Intent(myInstance, SettingView.class);
 				mIntent.putExtra("set_station", true);
 				myInstance.startActivity(mIntent);
-				//finish();
+				finish();
 			}
 			
 		});
+
 	}
 
 	@Override

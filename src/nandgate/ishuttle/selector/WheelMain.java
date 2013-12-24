@@ -127,6 +127,8 @@ public class WheelMain {
 					index=0;
 				}
 				wv_bias.setAdapter(new AlphaWheelAdapter(busLines.get(""+line_num)));
+				wv_bias.setCurrentItem(0);
+
 				key=""+line_num;
 				if(!busLines.get(""+line_num).get(wv_bias.getCurrentItem()).contains("-")){
 					key+=busLines.get(""+line_num).get(wv_bias.getCurrentItem());
@@ -166,6 +168,7 @@ public class WheelMain {
 	}
 
 	public List<String> getStationName(String line){
+		System.out.println(line);
 		List<String> tmp=new ArrayList<String>();
 		Map<Integer, List<String>> stationInfo=MainActivity.busInfo.get(line);
 		tmp.add("----");

@@ -177,17 +177,16 @@ public final class R {
         public static final int activity_main=0x7f030002;
         public static final int alert_view=0x7f030003;
         public static final int elect_home=0x7f030004;
-        public static final int layout_setting=0x7f030005;
-        public static final int my_dialog=0x7f030006;
-        public static final int new_weibo=0x7f030007;
-        public static final int pref_category=0x7f030008;
-        public static final int pref_list_item_bot=0x7f030009;
-        public static final int pref_list_item_mid=0x7f03000a;
-        public static final int pref_list_item_top=0x7f03000b;
-        public static final int pref_widget_checkbox=0x7f03000c;
-        public static final int pref_widget_more=0x7f03000d;
-        public static final int timepicker=0x7f03000e;
-        public static final int window=0x7f03000f;
+        public static final int my_dialog=0x7f030005;
+        public static final int new_weibo=0x7f030006;
+        public static final int pref_category=0x7f030007;
+        public static final int pref_list_item_bot=0x7f030008;
+        public static final int pref_list_item_mid=0x7f030009;
+        public static final int pref_list_item_top=0x7f03000a;
+        public static final int pref_widget_checkbox=0x7f03000b;
+        public static final int pref_widget_more=0x7f03000c;
+        public static final int timepicker=0x7f03000d;
+        public static final int window=0x7f03000e;
     }
     public static final class menu {
         public static final int activity_main=0x7f0d0000;

@@ -56,11 +56,11 @@ public class BaseLayer extends ItemizedOverlay<OverlayItem>{
 		return super.onTap(arg0, arg1);
 	}
 
-	public void showLayer(ArrayList<MKPoiInfo> arrayList){
+	public void showLayer(ArrayList<MKPoiInfo> arrayList, Drawable marker){
 		for(int i=0; i<arrayList.size(); ++i){
 			MKPoiInfo info=arrayList.get(i);
 			OverlayItem tmp=new OverlayItem(info.pt, info.name, info.address);
-			tmp.setMarker(MainActivity.marker);
+			tmp.setMarker(marker);
 			addItem(tmp);
 		}
 	}

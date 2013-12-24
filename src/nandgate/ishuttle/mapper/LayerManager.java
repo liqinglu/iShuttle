@@ -81,7 +81,6 @@ public class LayerManager {
 	}
 	
 	public void applyLocLayer(LocationData locationData){
-		mLoc.setMode(LocationMode.NORMAL);
 		mLoc.showlayer(locationData);
 		mMapView.getOverlays().add(mLoc);
 	}
